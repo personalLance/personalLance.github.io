@@ -4,10 +4,9 @@
 </head>
 <body style='margin-left: 30px;'>
 
-    <h1>CIT7 Students</h1>
-    <p>CIT7 students: &nbsp;Exam 1 Scores</p>
+	<h1>Select a major</h1>
         
-    <input type="button" id='btn' value="Get Student Scores">
+    <input type="button" id='btn' value="CIT Majors">
              
  	<div id="result"></div>
 
@@ -25,7 +24,7 @@
     	document.querySelector('#btn').onclick = function(){   // attach to button
 
         	var request = new XMLHttpRequest();
-        	request.open('GET', 'exam_scores.json');
+        	request.open('GET', 'cit5students.json');
 
         	request.onload = function(){
 
@@ -35,7 +34,7 @@
             		var contents = "<table cellspacing='5'><tr><td>Name</td><td>Midterm</td><td>Final</td></tr>"
 					
             		for(i = 0; i < data.length; i++) {
-                     	contents += "<tr><td>" + data[i].name + "</td><td>" + data[i].midterm + "</td><td>" + data[i].final + "</td></tr>";
+                     	contents += "<tr><td>" + data[i].name + "</td><td>" + data[i].major + "</td><td>" + data[i].midterm + "</td><td>" + data[i].final + "</td></tr>";
                 	}
 					
                 	contents += "</table>";
