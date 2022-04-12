@@ -16,7 +16,7 @@
    
     document.addEventListener('DOMContentLoaded', function() {      // when page has loaded, more or less
 													  
-    	document.querySelector('#cm').onclick = function(){   // attach to button
+    	document.querySelector('#cm','#bm').onclick = function(){   // attach to button
 
         	var request = new XMLHttpRequest();
         	request.open('GET', 'cit5students.json');
