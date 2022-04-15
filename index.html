@@ -1,52 +1,47 @@
 <!DOCTYPE html>
-<html><head>  <meta charset="UTF-8">
-        <title>students</title>
-</head>
-<body style='margin-left: 30px;'>
+ <html><head> <meta charset="UTF-8">  <title>Title of the document</title>
 
-	<h1>Select a major</h1>
-        
-    <input type="button" id='cm' value="CIT Majors">
-	<input type="button" id='bm' value="Business Majors">
-             
- 	<div id="result"></div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
-    
-<script>
-   
-    document.addEventListener('DOMContentLoaded', function() {      // when page has loaded, more or less
-													  
-    	document.querySelector('#cm','#bm').onclick = function(){   // attach to button
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 
-        	var request = new XMLHttpRequest();
-        	request.open('GET', 'cit5students.json');
+ </head>
+ <body>
+     <h2>Handlebars templates to populate a table with an array of objects using Ajax</h2>
+     <h3>array of people objects as a table</h3>
+         <div id="peopleTable"></div>
+ </body>
 
-        	request.onload = function(){
 
-            	var data = JSON.parse(request.responseText);
-			
-            	if (request.status == 200) {
-            		var contents = "<table cellspacing='5'><tr><td>Name</td><td>Major</td><td>Midterm</td><td>Final</td></tr>"
-					
-            		for(i = 0; i < data.length; i++) {
-                     	contents += "<tr><td>" + data[i].name + "</td><td>" + data[i].major + "</td><td>" + data[i].midterm + "</td><td>" + data[i].final + "</td></tr>";
-                	}
-					
-                	contents += "</table>";
-                	document.querySelector('#result').innerHTML = contents;
-            	}
-            	else {
-                	document.querySelector('#result').innerHTML = "There was an error.";
-            	}
-        }
+<!-- The script element is used to define the Handlebars template -->
+  <script type="text/x-handlebars-template" id="tableTemplate">
+     <table cellspacing='12'>
+         <tr><th>Name</th><th>State</th><th>Age</th><th>Flavor</th></tr>
+            {{#each rows}}
+                 <tr>
+                    <td>{{name}}</td><td>{{state}}</td><td>{{age}}</td><td>{{flavor}}</td>
+                 </tr>
+            {{/each}}
+     </table>
+  </script>
+  
+<!-- Ajax request for an array of JSON-ized objects  -->
+  <script>
+      var request = new XMLHttpRequest();
+      var url = "hb6data.json";     // datafile name
+      request.open('GET', url);     // open ajax request
 
-        request.send(null);
-    };
-	
-  });
-   
-</script>
-   
-   
-</body>
+      request.onload = function() {                       // when the data comes back, do this...
+          var data = JSON.parse(request.responseText);    // de-stringify JSON back to regular array of JavaScript objects
+          if (request.status == 200) {
+              var templateText = document.getElementById('tableTemplate').innerHTML;  // Get template text 
+              var compiledTemplateText = Handlebars.compile(templateText);         // Compile the Handlebars template
+              compiledHtml = compiledTemplateText({ rows: data })                  // populate the template with the data 
+              document.getElementById('peopleTable').innerHTML = compiledHtml; 	// put html table into division
+          }
+          else {
+             document.querySelector('#peopleTable').innerHTML = "There was an error, or data not found";
+          }
+      }        // end request.onload
+
+      request.send(null);    // send the request
+ </script>
 </html>
