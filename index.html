@@ -46,6 +46,9 @@
             else {
                 document.querySelector('#menuWork').innerHTML = "There was an error, or work was not found"
             }
+         function getWork(item){
+         return item.major == selectedDeg;
+     }
         }
         request.send(null);
     } 
