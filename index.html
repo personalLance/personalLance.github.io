@@ -43,10 +43,18 @@
             <th>GPA Points</th>
             <th>Major</th>
         </tr>
+                              <tr ng-repeat = "student in students | filter:search_text ">
+                          <td>{{students.id}}</td>
+                          <td>{{students.first_name}}</td>
+                          <td>{{students.last_name}}</td>
+                          <td>{{students.gpa_points}}</td>
+                      </tr>
+                 </table>
         
-   </table>
-    
-    <script>
+        </div>
+        </div>
+        
+        <script>
         var app = angular.module('studentsApp', []);
             
               
@@ -59,7 +67,8 @@
         
         });
         
-        </script>
+   </table>
+
     
 </body>
 </html>
