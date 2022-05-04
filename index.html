@@ -45,6 +45,22 @@
         </tr>
         
    </table>
+    
+    <script>
+        var app = angular.module('studentsApp', []);
+            
+              
+        app.controller('allCtrl', function($scope, $http) {
+            
+           $http.get("students.json")          
+             .then(function (response) {
+              $scope.students = response.data;
+             });
+        
+        });
+        
+        </script>
+    
 </body>
 </html>
 
