@@ -6,22 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body ng-app = "studentsApp">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script> 
+
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-    
+      
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="inde">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.html">All Advisees</a>
@@ -32,19 +34,46 @@
           </ul>
         </div>
       </nav>
-      <p><input type='text' ng-model='search_text' > Enter Search text</p>
-      <tr ng-repeat = "car in cars | filter:search_text "></tr>
-      <table class="table table-bordered table-striped">
-        <tr>
-           <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Credit Hours</th>
-            <th>GPA Points</th>
-            <th>Major</th>
-        </tr>
+
+      <div ng-controller = "allCtrl">
+
+        <h2>Advisees</h2>
+                  <p><input type='text' ng-model='search_text' > Enter Search text</p>
+                  <table class="table table-bordered table-striped">
+                      <tr>
+                          <th>id</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>GPA</th>
+                      </tr>
+                      <tr ng-repeat = "student in students | filter:search_text ">
+                          <td>{{students.id}}</td>
+                          <td>{{students.first_name}}</td>
+                          <td>{{students.last_name}}</td>
+                          <td>{{students.gpa_points}}</td>
+                      </tr>
+                 </table>
         
-   </table>
+        </div>
+        </div>
+        
+        <script>
+        var app = angular.module('studentsApp', []);
+            
+              
+        app.controller('allCtrl', function($scope, $http) {
+            
+           $http.get("students.json")          
+             .then(function (response) {
+              $scope.students = response.data;  
+             });
+        
+        });
+        
+        </script>
+        </body></html>
+
+
 </body>
 </html>
 
